@@ -5,7 +5,7 @@ var Spotify = require('spotify-web');
 
 dotenv.load();
 
-var uri = process.argv[2] || 'spotify:track:31qgVdvSqTQ7unwQQngycB';
+var uri = process.argv[2] || 'spotify:track:40pPI2TbaYSZlKfV44HRjn';
 
 // Spotify credentials from `.env`
 var username = process.env.USERNAME;
