@@ -2,6 +2,7 @@ var dotenv  = require('dotenv');
 var lame    = require('lame');
 var Speaker = require('speaker');
 var Spotify = require('spotify-web');
+var mToS    = require('./lib/milli-time.js');
 
 dotenv.load();
 
@@ -16,14 +17,6 @@ var type = Spotify.uriType(uri);
 
 if('playlist' != type) {
     throw new Error('Must pass a "playlist" URI, got ' + JSON.stringify(type));
-}
-
-// convert milliseconds to minutes:seconds
-function mToS(millis) {
-    var minutes = Math.floor(millis / 60000);
-    var seconds = ((millis % 60000) / 1000).toFixed(0);
-
-    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
 
 // login to spotify
@@ -61,7 +54,7 @@ Spotify.login(username, password, function(err, spotify) {
                 var duration = mToS(track.duration);
 
                 // display current song
-                console.log('Playing: %s - %s (%s)', track.artist[0].name, track.name, duration);
+                console.log('[Playing] %s — %s (%s)', track.artist[0].name, track.name, duration);
                 console.log('-----');
 
                 // decode and play over speaker
