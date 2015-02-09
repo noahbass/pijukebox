@@ -3,7 +3,7 @@ var lame    = require('lame');
 var Speaker = require('speaker');
 var Spotify = require('spotify-web');
 var mToS    = require('./lib/milli-time.js');
-var ProgressBar = require('progress');
+//var ProgressBar = require('progress');
 
 dotenv.load();
 

@@ -3,6 +3,7 @@ var lame    = require('lame');
 var Speaker = require('speaker');
 var Spotify = require('spotify-web');
 var mToS    = require('./lib/milli-time.js');
+var ProgressBar = require('progress');
 
 dotenv.load();
 
@@ -51,11 +52,26 @@ Spotify.login(username, password, function(err, spotify) {
             spotify.get(track.uri, function(err, track) {
                 if(err) throw err;
 
-                var duration = mToS(track.duration);
+                // make a new progress bar for the song
+                var blocks = 50;
+                var bar = new ProgressBar(':bar', {
+                    total: blocks
+                });
 
                 // display current song
-                console.log('[Playing] %s — %s (%s)', track.artist[0].name, track.name, duration);
-                console.log('-----');
+                console.log('[Playing] %s — %s (%s)', track.artist[0].name, track.name, mToS(track.duration));
+
+                // make an inital tick
+                bar.tick();
+
+                // make ticks to complete the bar
+                var timer = setInterval(function() {
+                    bar.tick();
+
+                    if(bar.complete) {
+                        clearInterval(timer);
+                    }
+                }, (track.duration) / (blocks-1));
 
                 // decode and play over speaker
                 track.play()
