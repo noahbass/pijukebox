@@ -33,10 +33,10 @@ Spotify.login(username, password, function(err, spotify) {
         bar.tick();
 
         // make ticks to complete the bar
-        var timer = setInterval(function () {
+        var timer = setInterval(function() {
             bar.tick();
+
             if(bar.complete) {
-                console.log('\n');
                 clearInterval(timer);
             }
         }, (track.duration) / blocks);
